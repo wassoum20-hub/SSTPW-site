@@ -133,3 +133,5 @@ document.getElementById("contactForm").addEventListener("submit", e => {
 
   form.reset();
 });
+
+setLanguage(currentLang);
