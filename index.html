@@ -3,8 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SSTPW - Société de Service et Travaux PB Wassim</title>
-  <meta name="description" content="SSTPW : bâtiment, maçonnerie, plomberie, travaux publics et piscines à Sfax, Tunisie.">
+  <title>SSTPW | Bâtiment et travaux à Sfax, Tunisie</title>
+  <meta name="description" content="SSTPW réalise vos travaux de bâtiment, génie civil, maçonnerie, plomberie, travaux publics et piscines à Sfax, en Tunisie. Contactez-nous pour un devis.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0d0d0d">
+  <link rel="canonical" href="https://wassoum20-hub.github.io/SSTPW-site/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_TN">
+  <meta property="og:site_name" content="SSTPW">
+  <meta property="og:title" content="SSTPW | Bâtiment et travaux à Sfax, Tunisie">
+  <meta property="og:description" content="Bâtiment, génie civil, maçonnerie, plomberie, travaux publics et piscines à Sfax.">
+  <meta property="og:url" content="https://wassoum20-hub.github.io/SSTPW-site/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GeneralContractor",
+      "name": "SSTPW",
+      "alternateName": "Société de Service et Travaux PB Wassim",
+      "url": "https://wassoum20-hub.github.io/SSTPW-site/",
+      "telephone": "+21698975759",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sfax",
+        "addressCountry": "TN"
+      },
+      "areaServed": "Sfax, Tunisie",
+      "serviceType": [
+        "Travaux de bâtiment et génie civil",
+        "Maçonnerie et enduits",
+        "Plomberie",
+        "Travaux publics",
+        "Piscines et aménagements"
+      ]
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +47,7 @@
       <span class="logo-mark">SSTPW</span>
       <span class="logo-text" data-i18n="company">Société de Service et Travaux PB Wassim</span>
     </div>
-    <nav class="nav">
+    <nav class="nav" aria-label="Navigation principale" data-i18n-aria-label="nav_label">
       <a href="#services" data-i18n="nav_services">Services</a>
       <a href="#projects" data-i18n="nav_projects">Projets</a>
       <a href="#about" data-i18n="nav_about">À propos</a>
@@ -23,6 +56,7 @@
     <button class="lang-btn" id="langBtn" type="button">عربي</button>
   </header>
 
+  <main>
   <section class="hero">
     <div class="hero-content">
       <h1>SSTPW</h1>
@@ -79,13 +113,17 @@
       <p>📞 <a href="tel:+21698975759" dir="ltr">98 975 759</a></p>
     </div>
     <form class="contact-form" id="contactForm">
-      <input type="text" name="name" data-i18n-placeholder="form_name" placeholder="Votre nom" required>
-      <input type="tel" name="phone" data-i18n-placeholder="form_phone" placeholder="Votre téléphone" required>
-      <textarea name="message" rows="4" data-i18n-placeholder="form_msg" placeholder="Décrivez votre projet" required></textarea>
+      <label class="visually-hidden" for="contactName" data-i18n="form_name">Votre nom</label>
+      <input id="contactName" type="text" name="name" autocomplete="name" data-i18n-placeholder="form_name" placeholder="Votre nom" required>
+      <label class="visually-hidden" for="contactPhone" data-i18n="form_phone">Votre téléphone</label>
+      <input id="contactPhone" type="tel" name="phone" autocomplete="tel" data-i18n-placeholder="form_phone" placeholder="Votre téléphone" required>
+      <label class="visually-hidden" for="contactMessage" data-i18n="form_msg">Décrivez votre projet</label>
+      <textarea id="contactMessage" name="message" rows="4" data-i18n-placeholder="form_msg" placeholder="Décrivez votre projet" required></textarea>
       <button type="submit" class="btn" data-i18n="form_send">Envoyer</button>
-      <p class="form-status" id="formStatus"></p>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
   </section>
+  </main>
 
   <footer class="footer">
     <p>SSTPW - <span data-i18n="footer_slogan">Construire aujourd'hui, pour demain</span></p>

@@ -1,6 +1,7 @@
 const translations = {
   fr: {
     company: "Société de Service et Travaux PB Wassim",
+    nav_label: "Navigation principale",
     nav_services: "Services",
     nav_projects: "Projets",
     nav_about: "À propos",
@@ -25,13 +26,19 @@ const translations = {
     form_name: "Votre nom",
     form_phone: "Votre téléphone",
     form_msg: "Décrivez votre projet",
-    form_send: "Envoyer",
-    form_ok: "Merci ! Nous vous contacterons bientôt.",
+    form_send: "Continuer sur WhatsApp",
+    whatsapp_name: "Nom",
+    whatsapp_phone: "Téléphone",
+    whatsapp_project: "Projet",
+    whatsapp_ready: "WhatsApp s’est ouvert avec votre demande. Vérifiez le message puis appuyez sur Envoyer.",
+    whatsapp_blocked: "L’ouverture de WhatsApp a été bloquée. Ouvrez-le avec ce lien :",
+    whatsapp_link: "Ouvrir WhatsApp",
     footer_slogan: "Construire aujourd'hui, pour demain",
     lang_switch: "عربي"
   },
   ar: {
     company: "شركة خدمات وأشغال PB Wassim",
+    nav_label: "التنقل الرئيسي",
     nav_services: "خدماتنا",
     nav_projects: "مشاريعنا",
     nav_about: "من نحن",
@@ -56,8 +63,13 @@ const translations = {
     form_name: "اسمك",
     form_phone: "رقم هاتفك",
     form_msg: "صف مشروعك",
-    form_send: "إرسال",
-    form_ok: "شكرًا! سنتواصل معك قريبًا.",
+    form_send: "متابعة عبر واتساب",
+    whatsapp_name: "الاسم",
+    whatsapp_phone: "رقم الهاتف",
+    whatsapp_project: "المشروع",
+    whatsapp_ready: "تم فتح واتساب مع تفاصيل طلبك. راجع الرسالة واضغط على إرسال.",
+    whatsapp_blocked: "تم حظر فتح واتساب. افتحه من هذا الرابط:",
+    whatsapp_link: "فتح واتساب",
     footer_slogan: "نبني اليوم من أجل الغد",
     lang_switch: "Français"
   }
@@ -75,6 +87,10 @@ function setLanguage(lang) {
     const key = el.getAttribute("data-i18n-placeholder");
     if (t[key]) el.placeholder = t[key];
   });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
+    const key = el.getAttribute("data-i18n-aria-label");
+    if (t[key]) el.setAttribute("aria-label", t[key]);
+  });
 
   const isAr = lang === "ar";
   document.documentElement.lang = lang;
@@ -90,7 +106,30 @@ document.getElementById("langBtn").addEventListener("click", () => {
 
 document.getElementById("contactForm").addEventListener("submit", e => {
   e.preventDefault();
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const t = translations[currentLang];
+  const message = [
+    `${t.whatsapp_name}: ${formData.get("name")}`,
+    `${t.whatsapp_phone}: ${formData.get("phone")}`,
+    `${t.whatsapp_project}: ${formData.get("message")}`
+  ].join("\n");
+  const whatsappUrl = `https://wa.me/21698975759?text=${encodeURIComponent(message)}`;
   const status = document.getElementById("formStatus");
-  status.textContent = translations[currentLang].form_ok;
-  e.target.reset();
+  const whatsappWindow = window.open(whatsappUrl, "_blank");
+
+  if (whatsappWindow) {
+    whatsappWindow.opener = null;
+    status.textContent = t.whatsapp_ready;
+  } else {
+    status.replaceChildren(document.createTextNode(`${t.whatsapp_blocked} `));
+    const link = document.createElement("a");
+    link.href = whatsappUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = t.whatsapp_link;
+    status.append(link);
+  }
+
+  form.reset();
 });
