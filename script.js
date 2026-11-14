@@ -10,6 +10,7 @@ const translations = {
     hero_1: "Services professionnels dans le domaine du bâtiment",
     hero_2: "Qualité supérieure selon les normes les plus récentes",
     hero_3: "Équipe spécialisée avec une grande expérience",
+    hero_image_alt: "Panneau publicitaire SSTPW pour les travaux de bâtiment à Sfax",
     cta: "Demander un devis",
     services_title: "Nos services",
     s1_title: "Travaux de bâtiment et génie civil",
@@ -47,6 +48,7 @@ const translations = {
     hero_1: "خدمات احترافية في مجال البناء",
     hero_2: "جودة عالية وفق أحدث المعايير",
     hero_3: "فريق متخصص ذو خبرة كبيرة",
+    hero_image_alt: "لوحة إعلانية لشركة SSTPW لأشغال البناء في صفاقس",
     cta: "اطلب عرض سعر",
     services_title: "خدماتنا",
     s1_title: "أشغال البناء والهندسة المدنية",
@@ -90,6 +92,10 @@ function setLanguage(lang) {
   document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
     const key = el.getAttribute("data-i18n-aria-label");
     if (t[key]) el.setAttribute("aria-label", t[key]);
+  });
+  document.querySelectorAll("[data-i18n-alt]").forEach(el => {
+    const key = el.getAttribute("data-i18n-alt");
+    if (t[key]) el.alt = t[key];
   });
 
   const isAr = lang === "ar";
