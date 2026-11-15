@@ -1,9 +1,9 @@
 window.SSTPW_SUPABASE_CONFIG = {
   // Replace with your actual Supabase project URL and anon/public key.
   // Example: "https://xyzcompany.supabase.co"
-  url: "https://YOUR_PROJECT_REF.supabase.co",
+  url: "https://ilbpxwrbaveizzndqgxs.supabase.co",
   // Example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  anonKey: "YOUR_ANON_PUBLIC_KEY"
+  anonKey: "sb_publishable_Ifj6uHVG0zpw-vku8yDazA_YT-zXVPS"
 };
 
 window.createSstpwSupabaseClient = function () {
@@ -17,4 +17,3 @@ window.createSstpwSupabaseClient = function () {
 
   return window.supabase.createClient(url, anonKey);
 };
-اعطيني الرابط
