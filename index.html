@@ -6,8 +6,9 @@
   <title>SSTPW | Bâtiment et travaux à Sfax, Tunisie</title>
   <meta name="description" content="SSTPW réalise vos travaux de bâtiment, génie civil, maçonnerie, plomberie, travaux publics et piscines à Sfax, en Tunisie. Contactez-nous pour un devis.">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0d0d0d">
+  <meta name="theme-color" content="#10130f">
   <link rel="canonical" href="https://wassoum20-hub.github.io/SSTPW-site/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_TN">
   <meta property="og:site_name" content="SSTPW">
@@ -49,98 +50,167 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <header class="header">
-    <div class="logo">
+    <a class="logo" href="#home" aria-label="SSTPW - Accueil" data-i18n-aria-label="home_label">
       <span class="logo-mark">SSTPW</span>
       <span class="logo-text" data-i18n="company">Société de Service et Travaux PB Wassim</span>
-    </div>
-    <nav class="nav" aria-label="Navigation principale" data-i18n-aria-label="nav_label">
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-controls="mainNav" aria-expanded="false" aria-label="Ouvrir le menu" data-i18n-aria-label="menu_open">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="mainNav" aria-label="Navigation principale" data-i18n-aria-label="nav_label">
       <a href="#services" data-i18n="nav_services">Services</a>
-      <a href="#projects" data-i18n="nav_projects">Projets</a>
+      <a href="#projects" data-i18n="nav_projects">Réalisations</a>
       <a href="#about" data-i18n="nav_about">À propos</a>
+      <a href="#approach" data-i18n="nav_approach">Votre projet</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a class="admin-link" href="admin.html" data-i18n="nav_admin">Admin</a>
     </nav>
-    <button class="lang-btn" id="langBtn" type="button">عربي</button>
+    <div class="header-actions">
+      <a class="header-contact" href="https://wa.me/21698975759" target="_blank" rel="noopener noreferrer" data-i18n="header_whatsapp">WhatsApp</a>
+      <button class="lang-btn" id="langBtn" type="button">عربي</button>
+    </div>
   </header>
 
   <main>
-  <section class="hero">
-    <div class="hero-content">
-      <h1>SSTPW</h1>
-      <p class="slogan" data-i18n="slogan">Votre projet, notre savoir-faire !</p>
-      <ul class="hero-list">
-        <li data-i18n="hero_1">Services professionnels dans le domaine du bâtiment</li>
-        <li data-i18n="hero_2">Qualité supérieure selon les normes les plus récentes</li>
-        <li data-i18n="hero_3">Équipe spécialisée avec une grande expérience</li>
-      </ul>
-      <a href="#contact" class="btn" data-i18n="cta">Demander un devis</a>
-    </div>
-    <figure class="hero-media">
-      <img src="images/sstpw-billboard.jpeg" alt="Panneau publicitaire SSTPW pour les travaux de bâtiment à Sfax" data-i18n-alt="hero_image_alt" width="1152" height="768">
-    </figure>
-  </section>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="eyebrow-dot"></span><span data-i18n="hero_eyebrow">Entreprise de bâtiment à Sfax</span></p>
+        <h1 data-i18n="hero_title">Bâtissons votre projet avec soin.</h1>
+        <p class="hero-description" data-i18n="hero_description">SSTPW vous accompagne dans vos travaux de bâtiment, de génie civil et d’aménagement à Sfax et ses environs.</p>
+        <div class="hero-actions">
+          <a href="https://wa.me/21698975759" class="btn" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="cta">Parler de votre projet</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="#services" class="text-link" data-i18n="discover_services">Découvrir nos services</a>
+        </div>
+        <div class="hero-location"><span aria-hidden="true">⌖</span><span data-i18n="hero_location">Basée à Sfax, Tunisie</span></div>
+      </div>
+      <figure class="hero-media">
+        <img src="images/sstpw-billboard.jpeg" alt="Panneau publicitaire SSTPW pour les travaux de bâtiment à Sfax" data-i18n-alt="hero_image_alt" width="1152" height="768" fetchpriority="high">
+        <figcaption><span class="caption-mark">S</span><span data-i18n="image_caption">SSTPW · Bâtiment & travaux</span></figcaption>
+      </figure>
+    </section>
 
-  <section class="section" id="services">
-    <h2 data-i18n="services_title">Nos services</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="icon">🏗️</div>
-        <h3 data-i18n="s1_title">Travaux de bâtiment et génie civil</h3>
+    <section class="section services-section" id="services">
+      <div class="section-heading">
+        <p class="eyebrow"><span data-i18n="services_eyebrow">Ce que nous faisons</span></p>
+        <h2 data-i18n="services_title">Des services pour concrétiser vos idées.</h2>
+        <p class="section-intro" data-i18n="services_intro">Une gamme de prestations pour vos travaux de construction et d’aménagement.</p>
       </div>
-      <div class="card">
-        <div class="icon">🧱</div>
-        <h3 data-i18n="s2_title">Maçonnerie et enduits</h3>
+      <div class="cards">
+        <article class="card">
+          <span class="service-number">01</span>
+          <h3 data-i18n="s1_title">Bâtiment et génie civil</h3>
+          <p data-i18n="s1_text">Travaux de bâtiment et interventions de génie civil adaptés à la nature de votre projet.</p>
+        </article>
+        <article class="card">
+          <span class="service-number">02</span>
+          <h3 data-i18n="s2_title">Maçonnerie et enduits</h3>
+          <p data-i18n="s2_text">Travaux de maçonnerie et enduits pour vos besoins de construction et de finition.</p>
+        </article>
+        <article class="card">
+          <span class="service-number">03</span>
+          <h3 data-i18n="s3_title">Plomberie</h3>
+          <p data-i18n="s3_text">Prestations de plomberie pour accompagner vos travaux et aménagements.</p>
+        </article>
+        <article class="card">
+          <span class="service-number">04</span>
+          <h3 data-i18n="s4_title">Travaux publics</h3>
+          <p data-i18n="s4_text">Travaux publics et aménagements selon les besoins du chantier.</p>
+        </article>
+        <article class="card">
+          <span class="service-number">05</span>
+          <h3 data-i18n="s5_title">Piscines et aménagements</h3>
+          <p data-i18n="s5_text">Réalisation de piscines et travaux d’aménagement associés.</p>
+        </article>
       </div>
-      <div class="card">
-        <div class="icon">🚰</div>
-        <h3 data-i18n="s3_title">Plomberie</h3>
-      </div>
-      <div class="card">
-        <div class="icon">🛣️</div>
-        <h3 data-i18n="s4_title">Travaux publics</h3>
-      </div>
-      <div class="card">
-        <div class="icon">🏊</div>
-        <h3 data-i18n="s5_title">Piscines et aménagements</h3>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section alt" id="projects">
-    <h2 data-i18n="projects_title">Nos projets</h2>
-    <p class="center muted" data-i18n="projects_text">Notre galerie de réalisations sera bientôt ajoutée.</p>
-  </section>
+    <section class="section gallery-section" id="projects">
+      <div class="section-heading">
+        <p class="eyebrow"><span data-i18n="gallery_eyebrow">Réalisations</span></p>
+        <h2 data-i18n="gallery_title">Quelques images de nos travaux.</h2>
+        <p class="section-intro" data-i18n="gallery_intro">Photos et vidéos partagées par SSTPW.</p>
+      </div>
+      <div class="media-gallery" id="mediaGallery"></div>
+      <p class="gallery-status" id="galleryStatus" role="status" aria-live="polite" data-i18n="gallery_empty" hidden>Aucune photo ou vidéo pour le moment.</p>
+    </section>
 
-  <section class="section" id="about">
-    <h2 data-i18n="about_title">À propos de nous</h2>
-    <p class="center about-text" data-i18n="about_text">SSTPW est une société de services et de travaux basée à Sfax. Nous réalisons vos projets avec une équipe spécialisée et expérimentée, dans le respect des normes les plus récentes.</p>
-  </section>
+    <section class="about-section" id="about">
+      <div class="about-copy">
+        <p class="eyebrow"><span data-i18n="about_eyebrow">À propos de SSTPW</span></p>
+        <h2 data-i18n="about_title">Un savoir-faire de proximité, à Sfax.</h2>
+        <p data-i18n="about_text">SSTPW est une société de services et de travaux basée à Sfax. Elle intervient dans le bâtiment, le génie civil et plusieurs domaines complémentaires. Chaque projet commence par l’écoute de votre besoin.</p>
+        <a href="#contact" class="text-link" data-i18n="about_link">Échangeons sur votre besoin <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="about-facts">
+        <div class="fact">
+          <span class="fact-value" data-i18n="fact_location">Sfax</span>
+          <span class="fact-label" data-i18n="fact_location_label">Tunisie</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value">05</span>
+          <span class="fact-label" data-i18n="fact_services">domaines de service</span>
+        </div>
+        <a class="fact fact-phone" href="tel:+21698975759">
+          <span class="fact-value" dir="ltr">98 975 759</span>
+          <span class="fact-label" data-i18n="fact_call">Appelez-nous</span>
+        </a>
+      </div>
+    </section>
 
-  <section class="section alt" id="contact">
-    <h2 data-i18n="contact_title">Contactez-nous</h2>
-    <div class="contact-info">
-      <p>📍 <span data-i18n="address">Sfax – Tunisie</span></p>
-      <p>📞 <a href="tel:+21698975759" dir="ltr">98 975 759</a></p>
-    </div>
-    <form class="contact-form" id="contactForm">
-      <label class="visually-hidden" for="contactName" data-i18n="form_name">Votre nom</label>
-      <input id="contactName" type="text" name="name" autocomplete="name" data-i18n-placeholder="form_name" placeholder="Votre nom" required>
-      <label class="visually-hidden" for="contactPhone" data-i18n="form_phone">Votre téléphone</label>
-      <input id="contactPhone" type="tel" name="phone" autocomplete="tel" data-i18n-placeholder="form_phone" placeholder="Votre téléphone" required>
-      <label class="visually-hidden" for="contactMessage" data-i18n="form_msg">Décrivez votre projet</label>
-      <textarea id="contactMessage" name="message" rows="4" data-i18n-placeholder="form_msg" placeholder="Décrivez votre projet" required></textarea>
-      <button type="submit" class="btn" data-i18n="form_send">Continuer sur WhatsApp</button>
-      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-    </form>
-  </section>
+    <section class="section approach-section" id="approach">
+      <div class="section-heading">
+        <p class="eyebrow"><span data-i18n="approach_eyebrow">Votre projet</span></p>
+        <h2 data-i18n="approach_title">Commençons par en parler.</h2>
+        <p class="section-intro" data-i18n="approach_intro">Expliquez-nous votre besoin : nous pourrons échanger sur votre projet et les prochaines étapes.</p>
+      </div>
+      <a href="https://wa.me/21698975759" class="btn" target="_blank" rel="noopener noreferrer">
+        <span data-i18n="approach_cta">Nous contacter sur WhatsApp</span>
+        <span class="btn-arrow" aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="section-heading">
+        <p class="eyebrow"><span data-i18n="contact_eyebrow">Contact</span></p>
+        <h2 data-i18n="contact_title">Parlons de votre projet.</h2>
+        <p class="section-intro" data-i18n="contact_intro">Appelez-nous ou envoyez votre demande directement sur WhatsApp.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <p class="contact-label" data-i18n="contact_phone_label">Téléphone</p>
+          <a class="contact-phone" href="tel:+21698975759" dir="ltr">+216 98 975 759</a>
+          <p class="contact-location"><span aria-hidden="true">⌖</span><span data-i18n="address">Sfax – Tunisie</span></p>
+          <a class="contact-whatsapp" href="https://wa.me/21698975759" target="_blank" rel="noopener noreferrer" data-i18n="contact_whatsapp">Écrire sur WhatsApp <span aria-hidden="true">↗</span></a>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <label for="contactName" data-i18n="form_name">Votre nom</label>
+          <input id="contactName" type="text" name="name" autocomplete="name" data-i18n-placeholder="form_name" placeholder="Votre nom" required>
+          <label for="contactPhone" data-i18n="form_phone">Votre téléphone</label>
+          <input id="contactPhone" type="tel" name="phone" autocomplete="tel" data-i18n-placeholder="form_phone" placeholder="Votre téléphone" required>
+          <label for="contactMessage" data-i18n="form_msg">Décrivez votre projet</label>
+          <textarea id="contactMessage" name="message" rows="4" data-i18n-placeholder="form_msg" placeholder="Décrivez votre projet" required></textarea>
+          <button type="submit" class="btn">
+            <span data-i18n="form_send">Continuer sur WhatsApp</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+          </button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
-    <p>SSTPW - <span data-i18n="footer_slogan">Construire aujourd'hui, pour demain</span></p>
+    <a class="footer-brand" href="#home">SSTPW</a>
+    <p data-i18n="footer_slogan">Construire aujourd'hui, pour demain</p>
     <p dir="ltr">© 2026 SSTPW</p>
   </footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="script.js"></script>
+  <script src="gallery.js"></script>
 </body>
 </html>

@@ -1,28 +1,61 @@
 const translations = {
   fr: {
+    title: "SSTPW | Bâtiment et travaux à Sfax, Tunisie",
+    description: "SSTPW réalise vos travaux de bâtiment, génie civil, maçonnerie, plomberie, travaux publics et piscines à Sfax, en Tunisie. Contactez-nous pour un devis.",
     company: "Société de Service et Travaux PB Wassim",
+    home_label: "SSTPW - Accueil",
     nav_label: "Navigation principale",
     nav_services: "Services",
-    nav_projects: "Projets",
+    nav_projects: "Réalisations",
     nav_about: "À propos",
+    nav_approach: "Votre projet",
     nav_contact: "Contact",
-    slogan: "Votre projet, notre savoir-faire !",
-    hero_1: "Services professionnels dans le domaine du bâtiment",
-    hero_2: "Qualité supérieure selon les normes les plus récentes",
-    hero_3: "Équipe spécialisée avec une grande expérience",
+    nav_admin: "Admin",
+    gallery_eyebrow: "Réalisations",
+    gallery_title: "Quelques images de nos travaux.",
+    gallery_intro: "Photos et vidéos partagées par SSTPW.",
+    gallery_empty: "Aucune photo ou vidéo pour le moment.",
+    menu_open: "Ouvrir le menu",
+    menu_close: "Fermer le menu",
+    header_whatsapp: "WhatsApp",
+    hero_eyebrow: "Entreprise de bâtiment à Sfax",
+    hero_title: "Bâtissons votre projet avec soin.",
+    hero_description: "SSTPW vous accompagne dans vos travaux de bâtiment, de génie civil et d’aménagement à Sfax et ses environs.",
+    cta: "Parler de votre projet",
+    discover_services: "Découvrir nos services",
+    hero_location: "Basée à Sfax, Tunisie",
     hero_image_alt: "Panneau publicitaire SSTPW pour les travaux de bâtiment à Sfax",
-    cta: "Demander un devis",
-    services_title: "Nos services",
-    s1_title: "Travaux de bâtiment et génie civil",
+    image_caption: "SSTPW · Bâtiment & travaux",
+    services_eyebrow: "Ce que nous faisons",
+    services_title: "Des services pour concrétiser vos idées.",
+    services_intro: "Une gamme de prestations pour vos travaux de construction et d’aménagement.",
+    s1_title: "Bâtiment et génie civil",
+    s1_text: "Travaux de bâtiment et interventions de génie civil adaptés à la nature de votre projet.",
     s2_title: "Maçonnerie et enduits",
+    s2_text: "Travaux de maçonnerie et enduits pour vos besoins de construction et de finition.",
     s3_title: "Plomberie",
+    s3_text: "Prestations de plomberie pour accompagner vos travaux et aménagements.",
     s4_title: "Travaux publics",
+    s4_text: "Travaux publics et aménagements selon les besoins du chantier.",
     s5_title: "Piscines et aménagements",
-    projects_title: "Nos projets",
-    projects_text: "Notre galerie de réalisations sera bientôt ajoutée.",
-    about_title: "À propos de nous",
-    about_text: "SSTPW est une société de services et de travaux basée à Sfax. Nous réalisons vos projets avec une équipe spécialisée et expérimentée, dans le respect des normes les plus récentes.",
-    contact_title: "Contactez-nous",
+    s5_text: "Réalisation de piscines et travaux d’aménagement associés.",
+    about_eyebrow: "À propos de SSTPW",
+    about_title: "Un savoir-faire de proximité, à Sfax.",
+    about_text: "SSTPW est une société de services et de travaux basée à Sfax. Elle intervient dans le bâtiment, le génie civil et plusieurs domaines complémentaires. Chaque projet commence par l’écoute de votre besoin.",
+    about_link: "Échangeons sur votre besoin",
+    fact_location: "Sfax",
+    fact_location_label: "Tunisie",
+    fact_services: "domaines de service",
+    fact_call: "Appelez-nous",
+    approach_eyebrow: "Votre projet",
+    approach_title: "Commençons par en parler.",
+    approach_intro: "Expliquez-nous votre besoin : nous pourrons échanger sur votre projet et les prochaines étapes.",
+    approach_cta: "Nous contacter sur WhatsApp",
+    contact_eyebrow: "Contact",
+    contact_title: "Parlons de votre projet.",
+    contact_intro: "Appelez-nous ou envoyez votre demande directement sur WhatsApp.",
+    contact_phone_label: "Téléphone",
+    contact_whatsapp: "Écrire sur WhatsApp",
     address: "Sfax – Tunisie",
     form_name: "Votre nom",
     form_phone: "Votre téléphone",
@@ -38,34 +71,67 @@ const translations = {
     lang_switch: "عربي"
   },
   ar: {
+    title: "SSTPW | البناء والأشغال في صفاقس، تونس",
+    description: "تقدم SSTPW خدمات البناء والهندسة المدنية والبناء والسباكة والأشغال العامة والمسابح في صفاقس، تونس. تواصل معنا لطلب عرض سعر.",
     company: "شركة خدمات وأشغال PB Wassim",
+    home_label: "SSTPW - الرئيسية",
     nav_label: "التنقل الرئيسي",
     nav_services: "خدماتنا",
-    nav_projects: "مشاريعنا",
+    nav_projects: "أعمالنا",
     nav_about: "من نحن",
+    nav_approach: "مشروعك",
     nav_contact: "اتصل بنا",
-    slogan: "مشروعك، خبرتنا!",
-    hero_1: "خدمات احترافية في مجال البناء",
-    hero_2: "جودة عالية وفق أحدث المعايير",
-    hero_3: "فريق متخصص ذو خبرة كبيرة",
+    nav_admin: "الإدارة",
+    gallery_eyebrow: "أعمالنا",
+    gallery_title: "صور من أعمالنا.",
+    gallery_intro: "صور ومقاطع فيديو تشاركها SSTPW.",
+    gallery_empty: "لا توجد صور أو مقاطع فيديو حاليًا.",
+    menu_open: "فتح القائمة",
+    menu_close: "إغلاق القائمة",
+    header_whatsapp: "واتساب",
+    hero_eyebrow: "شركة بناء في صفاقس",
+    hero_title: "نبني مشروعك بعناية.",
+    hero_description: "ترافقك SSTPW في أعمال البناء والهندسة المدنية والتهيئة في صفاقس والمناطق المجاورة.",
+    cta: "تحدث عن مشروعك",
+    discover_services: "اكتشف خدماتنا",
+    hero_location: "مقرنا في صفاقس، تونس",
     hero_image_alt: "لوحة إعلانية لشركة SSTPW لأشغال البناء في صفاقس",
-    cta: "اطلب عرض سعر",
-    services_title: "خدماتنا",
-    s1_title: "أشغال البناء والهندسة المدنية",
+    image_caption: "SSTPW · البناء والأشغال",
+    services_eyebrow: "ماذا نقدم",
+    services_title: "خدمات تساعدك على تحقيق أفكارك.",
+    services_intro: "مجموعة من الخدمات لأعمال البناء والتهيئة.",
+    s1_title: "البناء والهندسة المدنية",
+    s1_text: "أعمال البناء وتدخلات الهندسة المدنية بما يناسب طبيعة مشروعك.",
     s2_title: "البناء والمحارة والتلبيس",
+    s2_text: "أعمال البناء والمحارة لتلبية احتياجات البناء والتشطيب.",
     s3_title: "السباكة",
-    s4_title: "الأشغال العمومية",
+    s3_text: "خدمات السباكة لمرافقة أعمالك ومشاريع التهيئة.",
+    s4_title: "الأشغال العامة",
+    s4_text: "أشغال عامة وتهيئة وفقًا لاحتياجات موقع العمل.",
     s5_title: "المسابح والتهيئة",
-    projects_title: "مشاريعنا",
-    projects_text: "سيتم قريبًا إضافة معرض أعمالنا.",
-    about_title: "من نحن",
-    about_text: "SSTPW شركة خدمات وأشغال مقرها صفاقس. ننجز مشاريعكم بفريق متخصص وذي خبرة، والتزامًا بأحدث المعايير.",
-    contact_title: "تواصل معنا",
+    s5_text: "إنجاز المسابح وأعمال التهيئة المرتبطة بها.",
+    about_eyebrow: "عن SSTPW",
+    about_title: "خبرة قريبة منك في صفاقس.",
+    about_text: "SSTPW شركة خدمات وأشغال مقرها صفاقس. تعمل في مجال البناء والهندسة المدنية وعدة مجالات أخرى مرتبطة بها. يبدأ كل مشروع بالاستماع إلى احتياجاتك.",
+    about_link: "لنتحدث عن احتياجاتك",
+    fact_location: "صفاقس",
+    fact_location_label: "تونس",
+    fact_services: "مجالات للخدمات",
+    fact_call: "اتصل بنا",
+    approach_eyebrow: "مشروعك",
+    approach_title: "لنبدأ بالحديث عنه.",
+    approach_intro: "أخبرنا بما تحتاجه لنتبادل الحديث حول مشروعك والخطوات القادمة.",
+    approach_cta: "تواصل معنا عبر واتساب",
+    contact_eyebrow: "التواصل",
+    contact_title: "لنتحدث عن مشروعك.",
+    contact_intro: "اتصل بنا أو أرسل طلبك مباشرة عبر واتساب.",
+    contact_phone_label: "الهاتف",
+    contact_whatsapp: "راسلنا عبر واتساب",
     address: "صفاقس – تونس",
     form_name: "اسمك",
     form_phone: "رقم هاتفك",
     form_msg: "صف مشروعك",
-    form_send: "متابعة عبر واتساب",
+    form_send: "المتابعة عبر واتساب",
     whatsapp_name: "الاسم",
     whatsapp_phone: "رقم الهاتف",
     whatsapp_project: "المشروع",
@@ -102,17 +168,40 @@ function setLanguage(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = isAr ? "rtl" : "ltr";
   document.body.classList.toggle("rtl", isAr);
+  document.title = t.title;
+  document.querySelector('meta[name="description"]').content = t.description;
   document.getElementById("langBtn").textContent = t.lang_switch;
   currentLang = lang;
+  const menuIsOpen = navToggle.getAttribute("aria-expanded") === "true";
+  navToggle.setAttribute("aria-label", t[menuIsOpen ? "menu_close" : "menu_open"]);
+  document.dispatchEvent(new CustomEvent("sstpw:languagechange", { detail: { lang } }));
 }
+
+const navToggle = document.getElementById("navToggle");
+const mainNav = document.getElementById("mainNav");
+
+navToggle.addEventListener("click", () => {
+  const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+  navToggle.setAttribute("aria-expanded", String(!isOpen));
+  navToggle.setAttribute("aria-label", translations[currentLang][isOpen ? "menu_open" : "menu_close"]);
+  mainNav.classList.toggle("is-open", !isOpen);
+});
+
+mainNav.addEventListener("click", event => {
+  if (event.target.closest("a")) {
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", translations[currentLang].menu_open);
+    mainNav.classList.remove("is-open");
+  }
+});
 
 document.getElementById("langBtn").addEventListener("click", () => {
   setLanguage(currentLang === "fr" ? "ar" : "fr");
 });
 
-document.getElementById("contactForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const form = e.currentTarget;
+document.getElementById("contactForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const form = event.currentTarget;
   const formData = new FormData(form);
   const t = translations[currentLang];
   const message = [
