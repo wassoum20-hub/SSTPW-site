@@ -40,7 +40,6 @@
             <a href="supabase-setup.sql" download data-admin-i18n="setup_sql">تنزيل ملف SQL</a>
           </li>
           <li data-admin-i18n="setup_step4">أنشئ حساب المدير وأضف UUID الخاص به إلى جدول site_admins كما هو موضح داخل ملف SQL.</li>
-          <li data-admin-i18n="setup_step5">فعّل GitHub من Authentication → Sign In / Providers، واضبط تطبيق GitHub باستخدام Callback URL الذي يعرضه Supabase. عيّن Site URL وأضف رابط صفحة الإدارة إلى Redirect URLs في Authentication → URL Configuration.</li>
         </ol>
         <p class="setup-warning" data-admin-i18n="setup_warning">لا تضع مفتاح service_role في ملفات الموقع ولا ترسله لأحد.</p>
       </div>
@@ -52,8 +51,6 @@
         <label for="adminPassword" data-admin-i18n="password">كلمة المرور</label>
         <input id="adminPassword" name="password" type="password" autocomplete="current-password" required>
         <button class="btn" type="submit" data-admin-i18n="sign_in">تسجيل الدخول</button>
-        <button class="secondary-btn" id="githubSignInBtn" type="button" data-admin-i18n="github_sign_in">المتابعة باستخدام GitHub</button>
-        <p class="upload-hint" data-admin-i18n="github_setup_hint">لتفعيل GitHub، أعدّ المزوّد وروابط العودة في Supabase. أول تسجيل ينشئ مستخدمًا؛ أضف UUID الخاص به إلى site_admins قبل تسجيل الدخول مرة أخرى.</p>
       </form>
 
       <section id="dashboard" hidden>
