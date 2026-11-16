@@ -160,11 +160,18 @@ async function setupCaptcha() {
         if (!captchaScriptPromise) {
               captchaScriptPromise = new Promise((resolve, reject) => {
                     const script = document.createElement("script");
-                    script.src = "https://js.hcaptcha.com/1/api.js?render=explicit";
+                    const callbackName = "sstpwHcaptchaLoaded";
+                    window[callbackName] = () => {
+                          delete window[callbackName];
+                          resolve();
+                    };
+                    script.src = `https://js.hcaptcha.com/1/api.js?onload=${callbackName}&render=explicit`;
                     script.async = true;
                     script.defer = true;
-                    script.onload = resolve;
-                    script.onerror = () => reject(new Error(text("captcha_load_error")));
+                    script.onerror = () => {
+                          delete window[callbackName];
+                          reject(new Error(text("captcha_load_error")));
+                    };
                     document.head.append(script);
               });
         }
