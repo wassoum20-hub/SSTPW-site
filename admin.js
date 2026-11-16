@@ -6,11 +6,12 @@ const adminTranslations = {
           title: "إدارة الصور والفيديو",
           intro: "سجّل الدخول بحساب المدير لإضافة الوسائط إلى معرض الموقع.",
           config_missing: "يلزم إعداد Supabase أولًا: أضف رابط المشروع والمفتاح العام في supabase-config.js، ثم نفّذ supabase-setup.sql واتبع خطوات إنشاء حساب المدير.",
+          database_missing: "تعذّر العثور على جدول site_media في مخطط Supabase. نزّل ملف SQL ونفّذه في SQL Editor داخل Supabase، ثم أكمل خطوات إنشاء حساب المدير أدناه.",
           setup_step1: "أنشئ مشروعًا في Supabase.",
           setup_step2: "ضع Project URL والمفتاح anon/public في supabase-config.js.",
           setup_step3: "نفّذ ملف إعداد الجداول والتخزين:",
           setup_sql: "تنزيل ملف SQL",
-          setup_step4: "أنشئ حساب المدير وأضف UUID الخاص به إلى جدول site_admins كما هو موضح داخل ملف SQL.",
+          setup_step4: "أنشئ حساب المدير وأضف UUID الخاص به إلى جدول site_admins كما هو موضح داخل ملف SQL. سيُطلب إعداد TOTP عند أول دخول.",
           setup_warning: "لا تضع مفتاح service_role في ملفات الموقع ولا ترسله لأحد.",
           email: "البريد الإلكتروني",
           password: "كلمة المرور",
@@ -34,6 +35,15 @@ const adminTranslations = {
           delete_error: "تعذر حذف الملف: ",
           delete_incomplete: "حُذف الملف من التخزين، لكن تعذر حذف سجله. احفظ المسار التالي لمراجعته: ",
           admin_only: "هذا الحساب غير مصرح له بإدارة الموقع.",
+          mfa_enroll_title: "إعداد التحقق بخطوتين",
+          mfa_enroll_intro: "امسح رمز QR باستخدام تطبيق مصادقة، ثم أدخل الرمز المكوّن من 6 أرقام.",
+          mfa_challenge_title: "تحقق بخطوتين",
+          mfa_challenge_intro: "أدخل الرمز الحالي من تطبيق المصادقة للمتابعة.",
+          mfa_code: "رمز التحقق",
+          mfa_verify: "تحقق وتابع",
+          mfa_cancel: "إلغاء وتسجيل الخروج",
+          mfa_secret: "المفتاح اليدوي",
+          mfa_verifying: "جارٍ التحقق...",
           no_media: "لا توجد صور أو مقاطع فيديو منشورة.",
           file_type: "نوع ملف غير مدعوم. استخدم JPG أو PNG أو WebP أو MP4 أو WebM.",
           file_size: "حجم الملف يتجاوز الحد الأقصى وهو 50 ميغابايت.",
@@ -49,11 +59,12 @@ const adminTranslations = {
           title: "Gestion des photos et vidéos",
           intro: "Connectez-vous avec le compte administrateur pour ajouter des médias à la galerie.",
           config_missing: "Supabase doit être configuré : ajoutez l’URL du projet et la clé publique dans supabase-config.js, exécutez supabase-setup.sql, puis suivez les étapes de création du compte administrateur.",
+          database_missing: "La table site_media est introuvable dans le schéma Supabase. Téléchargez le fichier SQL et exécutez-le dans le SQL Editor de Supabase, puis suivez les étapes de création du compte administrateur ci-dessous.",
           setup_step1: "Créez un projet Supabase.",
           setup_step2: "Placez l’URL du projet et la clé anon/public dans supabase-config.js.",
           setup_step3: "Exécutez le fichier de configuration des tables et du stockage :",
           setup_sql: "Télécharger le fichier SQL",
-          setup_step4: "Créez le compte administrateur et ajoutez son UUID à la table site_admins comme indiqué dans le fichier SQL.",
+          setup_step4: "Créez le compte administrateur et ajoutez son UUID à site_admins comme indiqué dans le fichier SQL. La configuration TOTP sera demandée à la première connexion.",
           setup_warning: "Ne placez jamais la clé service_role dans les fichiers du site et ne la partagez pas.",
           email: "Adresse e-mail",
           password: "Mot de passe",
@@ -77,6 +88,15 @@ const adminTranslations = {
           delete_error: "Suppression impossible : ",
           delete_incomplete: "Le fichier est supprimé du stockage, mais son enregistrement n’a pas pu être effacé. Conservez ce chemin pour vérification : ",
           admin_only: "Ce compte n’est pas autorisé à administrer le site.",
+          mfa_enroll_title: "Configurer la double authentification",
+          mfa_enroll_intro: "Scannez le QR code avec une application d’authentification, puis saisissez le code à 6 chiffres.",
+          mfa_challenge_title: "Double authentification",
+          mfa_challenge_intro: "Saisissez le code actuel de votre application d’authentification pour continuer.",
+          mfa_code: "Code de vérification",
+          mfa_verify: "Vérifier et continuer",
+          mfa_cancel: "Annuler et se déconnecter",
+          mfa_secret: "Clé manuelle",
+          mfa_verifying: "Vérification en cours...",
           no_media: "Aucune photo ou vidéo publiée.",
           file_type: "Type de fichier non accepté. Utilisez JPG, PNG, WebP, MP4 ou WebM.",
           file_size: "Le fichier dépasse la limite de 50 Mo.",
@@ -100,9 +120,21 @@ const adminStatus = document.getElementById("adminStatus");
 const setupNotice = document.getElementById("setupNotice");
 const setupGuide = document.getElementById("setupGuide");
 const adminMediaList = document.getElementById("adminMediaList");
+const mfaStep = document.getElementById("mfaStep");
+const mfaForm = document.getElementById("mfaForm");
+const mfaTitle = document.getElementById("mfaTitle");
+const mfaIntro = document.getElementById("mfaIntro");
+const mfaEnrollment = document.getElementById("mfaEnrollment");
+const mfaQr = document.getElementById("mfaQr");
+const mfaSecret = document.getElementById("mfaSecret");
+let pendingMfa;
 
 function text(key) {
     return adminTranslations[adminLanguage][key];
+}
+
+function isMissingTableError(error) {
+    return error && (error.code === "PGRST205" || error.code === "42P01");
 }
 
 function setStatus(message, kind) {
@@ -123,6 +155,7 @@ function setLanguage(language) {
     if (adminMediaList.childElementCount === 0 && !dashboard.hidden) {
           adminMediaList.textContent = text("no_media");
     }
+      updateMfaText();
 }
 
 function getFileExtension(file) {
@@ -274,6 +307,83 @@ async function uploadFiles(event) {
     }
 }
 
+function updateMfaText() {
+    if (!pendingMfa) return;
+    const enrolling = pendingMfa.mode === "enroll";
+    mfaTitle.textContent = text(enrolling ? "mfa_enroll_title" : "mfa_challenge_title");
+    mfaIntro.textContent = text(enrolling ? "mfa_enroll_intro" : "mfa_challenge_intro");
+}
+
+async function continueWithMfa(session) {
+    const { data: assurance, error: assuranceError } = await supabaseClient.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (assuranceError) throw assuranceError;
+    if (assurance.currentLevel === "aal2") {
+          await requireAdmin(session);
+          return;
+    }
+
+    const { data: factors, error: factorsError } = await supabaseClient.auth.mfa.listFactors();
+    if (factorsError) throw factorsError;
+    const verifiedFactor = factors.totp.find(factor => factor.status === "verified");
+    if (verifiedFactor) {
+          const { data: challenge, error: challengeError } = await supabaseClient.auth.mfa.challenge({ factorId: verifiedFactor.id });
+          if (challengeError) throw challengeError;
+          pendingMfa = { mode: "challenge", factorId: verifiedFactor.id, challengeId: challenge.id };
+    } else {
+          const { data: enrollment, error: enrollmentError } = await supabaseClient.auth.mfa.enroll({
+                  factorType: "totp",
+                  friendlyName: "SSTPW Admin"
+          });
+          if (enrollmentError) throw enrollmentError;
+          pendingMfa = {
+                  mode: "enroll",
+                  factorId: enrollment.id,
+                  qrCode: enrollment.totp.qr_code,
+                  secret: enrollment.totp.secret
+          };
+          mfaQr.src = enrollment.totp.qr_code;
+          mfaSecret.textContent = enrollment.totp.secret;
+    }
+    updateMfaText();
+    mfaEnrollment.hidden = pendingMfa.mode !== "enroll";
+    mfaStep.hidden = false;
+    loginForm.hidden = true;
+    mfaForm.querySelector('input[name="code"]').focus();
+}
+
+async function verifyMfa(event) {
+    event.preventDefault();
+    if (!pendingMfa) return;
+    const submitButton = mfaForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    setStatus(text("mfa_verifying"));
+    try {
+          let challengeId = pendingMfa.challengeId;
+          if (pendingMfa.mode === "enroll") {
+                  const { data: challenge, error: challengeError } = await supabaseClient.auth.mfa.challenge({ factorId: pendingMfa.factorId });
+                  if (challengeError) throw challengeError;
+                  challengeId = challenge.id;
+          }
+          const { data, error } = await supabaseClient.auth.mfa.verify({
+                  factorId: pendingMfa.factorId,
+                  challengeId,
+                  code: new FormData(mfaForm).get("code")
+          });
+          if (error) throw error;
+          pendingMfa = undefined;
+          mfaStep.hidden = true;
+          mfaForm.reset();
+          await requireAdmin(data.session);
+          setStatus("");
+    } catch (error) {
+          dashboard.hidden = true;
+          mfaStep.hidden = false;
+          setStatus(`${text("login_error")}${error.message}`, "error");
+    } finally {
+          submitButton.disabled = false;
+    }
+}
+
 async function initializeAdmin() {
     const client = typeof window.createSstpwSupabaseClient === "function"
       ? window.createSstpwSupabaseClient()
@@ -286,9 +396,21 @@ async function initializeAdmin() {
 
   supabaseClient = client;
     loginForm.hidden = false;
+    const { error: schemaError } = await supabaseClient
+      .from("site_media")
+      .select("id")
+      .limit(1);
+    if (isMissingTableError(schemaError)) {
+          loginForm.hidden = true;
+          setupGuide.hidden = false;
+          setupNotice.textContent = text("database_missing");
+          return;
+    }
+    if (schemaError) throw schemaError;
+
     const { data, error } = await supabaseClient.auth.getSession();
     if (error) throw error;
-    if (data.session) await requireAdmin(data.session);
+      if (data.session) await continueWithMfa(data.session);
 }
 
 document.getElementById("adminLangBtn").addEventListener("click", async () => {
@@ -314,7 +436,7 @@ loginForm.addEventListener("submit", async event => {
                   password: formData.get("password")
           });
           if (error) throw error;
-          await requireAdmin(data.session);
+          await continueWithMfa(data.session);
           setStatus("");
     } catch (error) {
           dashboard.hidden = true;
@@ -326,6 +448,21 @@ loginForm.addEventListener("submit", async event => {
 });
 
 uploadForm.addEventListener("submit", uploadFiles);
+mfaForm.addEventListener("submit", verifyMfa);
+
+document.getElementById("mfaCancelBtn").addEventListener("click", async () => {
+    try {
+          const { error } = await supabaseClient.auth.signOut();
+          if (error) throw error;
+          pendingMfa = undefined;
+          mfaStep.hidden = true;
+          mfaForm.reset();
+          loginForm.hidden = false;
+          setStatus("");
+    } catch (error) {
+          setStatus(`${text("setup_error")}${error.message}`, "error");
+    }
+});
 
 document.getElementById("signOutBtn").addEventListener("click", async () => {
     try {

@@ -53,6 +53,21 @@
         <button class="btn" type="submit" data-admin-i18n="sign_in">تسجيل الدخول</button>
       </form>
 
+      <section class="mfa-step" id="mfaStep" hidden>
+        <h2 id="mfaTitle"></h2>
+        <p id="mfaIntro"></p>
+        <div class="mfa-enrollment" id="mfaEnrollment" hidden>
+          <img class="mfa-qr" id="mfaQr" alt="TOTP QR code">
+          <p><span data-admin-i18n="mfa_secret">المفتاح اليدوي</span>: <code id="mfaSecret"></code></p>
+        </div>
+        <form class="admin-form" id="mfaForm">
+          <label for="mfaCode" data-admin-i18n="mfa_code">رمز التحقق</label>
+          <input id="mfaCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+          <button class="btn" type="submit" data-admin-i18n="mfa_verify">تحقق وتابع</button>
+          <button class="secondary-btn" id="mfaCancelBtn" type="button" data-admin-i18n="mfa_cancel">إلغاء وتسجيل الخروج</button>
+        </form>
+      </section>
+
       <section id="dashboard" hidden>
         <div class="dashboard-bar">
           <p><span data-admin-i18n="signed_in_as">تم تسجيل الدخول باسم</span> <strong id="adminEmailLabel"></strong></p>
