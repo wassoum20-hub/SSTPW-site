@@ -25,7 +25,8 @@ as $$
     select 1
     from public.site_admins
     where user_id = (select auth.uid())
-  );
+  )
+  and (select auth.jwt() ->> 'aal') = 'aal2';
 $$;
 
 revoke all on function public.is_site_admin() from public;
@@ -112,4 +113,6 @@ create policy "Admins can delete SSTPW media"
 
 -- After creating the admin user in Supabase Authentication, add its UUID here:
 -- insert into public.site_admins (user_id) values ('ADMIN_USER_UUID');
+
+notify pgrst, 'reload schema';
 م
