@@ -14,6 +14,7 @@
 .admin-form input:not([type="file"]) { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 4px; color: var(--white); background: var(--ink); }
 .admin-form input[type="file"] { width: 100%; padding: 12px; border: 1px dashed var(--line); color: var(--muted); background: var(--ink); }
 .admin-form input:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+.hcaptcha-widget { min-height: 78px; margin-top: 8px; }
 .admin-form .btn { align-self: flex-start; margin-top: 8px; }
 .admin-form .secondary-btn { align-self: flex-start; margin-top: 8px; }
 .mfa-step { max-width: 560px; margin: 0 auto; }
