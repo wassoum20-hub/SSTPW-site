@@ -4,18 +4,29 @@ const galleryStatus = document.getElementById("galleryStatus");
 const galleryMessages = {
   fr: {
     empty: "Aucune photo ou vidéo pour le moment.",
-    error: "La galerie est momentanément indisponible."
+    error: "La galerie est momentanément indisponible.",
+    setup: "La galerie est actuellement inaccessible à cause de sa configuration.",
+    admin: "Contacter l’administrateur du site"
   },
   ar: {
     empty: "لا توجد صور أو مقاطع فيديو حاليًا.",
-    error: "المعرض غير متاح مؤقتًا."
+    error: "المعرض غير متاح مؤقتًا.",
+    setup: "يتعذر عرض المعرض حاليًا بسبب إعدادات قاعدة البيانات.",
+    admin: "تواصل مع مدير الموقع"
   }
 };
 let galleryState = "loading";
 
 function updateGalleryStatus() {
   const language = document.documentElement.lang === "ar" ? "ar" : "fr";
-  if (galleryState === "empty" || galleryState === "error") {
+  if (galleryState === "setup") {
+    galleryStatus.replaceChildren(document.createTextNode(`${galleryMessages[language].setup} `));
+    const link = document.createElement("a");
+    link.href = "admin.html";
+    link.textContent = galleryMessages[language].admin;
+    galleryStatus.append(link);
+    galleryStatus.hidden = false;
+  } else if (galleryState === "empty" || galleryState === "error") {
     galleryStatus.textContent = galleryMessages[language][galleryState];
     galleryStatus.hidden = false;
   } else {
@@ -95,7 +106,9 @@ async function loadGallery() {
     galleryState = "ready";
     updateGalleryStatus();
   } catch (error) {
-    galleryState = "error";
+    galleryState = error && (error.code === "PGRST205" || error.code === "42P01")
+      ? "setup"
+      : "error";
     updateGalleryStatus();
     console.error("Unable to load the SSTPW media gallery:", error.message);
   }
