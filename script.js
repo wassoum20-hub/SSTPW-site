@@ -70,6 +70,7 @@ const translations = {
     form_required: "Veuillez remplir tous les champs.",
     form_invalid_phone: "Veuillez saisir un numéro de téléphone valide.",
     footer_slogan: "Construire aujourd'hui, pour demain",
+    back_to_top: "Retour en haut",
     lang_switch: "عربي"
   },
   ar: {
@@ -143,6 +144,7 @@ const translations = {
     form_required: "يرجى ملء جميع الحقول.",
     form_invalid_phone: "يرجى إدخال رقم هاتف صالح.",
     footer_slogan: "نبني اليوم من أجل الغد",
+    back_to_top: "العودة إلى أعلى",
     lang_switch: "Français"
   }
 };
@@ -210,6 +212,16 @@ mainNav.addEventListener("click", event => {
     mainNav.classList.remove("is-open");
   }
 });
+
+const backToTop = document.getElementById("backToTop");
+const updateBackToTop = () => {
+  backToTop.hidden = window.scrollY < 500;
+};
+window.addEventListener("scroll", updateBackToTop, { passive: true });
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+updateBackToTop();
 
 document.getElementById("langBtn").addEventListener("click", () => {
   setLanguage(currentLang === "fr" ? "ar" : "fr");
