@@ -229,6 +229,15 @@ function getFileExtension(file) {
     return extensions[file.type];
 }
 
+function createUniqueFilePath(file) {
+    const extension = getFileExtension(file);
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+          return `${window.crypto.randomUUID()}.${extension}`;
+    }
+    const random = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return `${random}.${extension}`;
+}
+
 function createMediaCard(item) {
     const card = document.createElement("article");
     card.className = "admin-media-card";
@@ -340,7 +349,7 @@ async function uploadFiles(event) {
     setStatus(text("uploading"));
     try {
           for (const file of files) {
-                  const path = `${crypto.randomUUID()}.${getFileExtension(file)}`;
+                  const path = createUniqueFilePath(file);
                   const { error: uploadError } = await supabaseClient.storage
                     .from(bucketName)
                     .upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type });
@@ -449,6 +458,9 @@ async function initializeAdmin() {
       ? window.createSstpwSupabaseClient()
           : null;
     if (!client) {
+          loginForm.hidden = true;
+          dashboard.hidden = true;
+          mfaStep.hidden = true;
           setupGuide.hidden = false;
           setupNotice.textContent = text("config_missing");
           return;
@@ -467,6 +479,8 @@ async function initializeAdmin() {
       .limit(1);
     if (isMissingTableError(schemaError)) {
           loginForm.hidden = true;
+          dashboard.hidden = true;
+          mfaStep.hidden = true;
           setupGuide.hidden = false;
           setupNotice.textContent = text("database_missing");
           return;

@@ -26,7 +26,12 @@ function updateGalleryStatus() {
 function createGalleryItem(item, client) {
   const figure = document.createElement("figure");
   figure.className = "media-card";
-  const publicUrl = client.storage.from("sstpw-media").getPublicUrl(item.storage_path).data.publicUrl;
+  if (!item || typeof item.storage_path !== "string" || !item.storage_path) return null;
+
+  const urlResult = client.storage.from("sstpw-media").getPublicUrl(item.storage_path);
+  const publicUrl = urlResult?.data?.publicUrl;
+  if (!publicUrl) return null;
+
   const media = item.media_type === "video" ? document.createElement("video") : document.createElement("img");
 
   if (item.media_type === "video") {
@@ -68,13 +73,25 @@ async function loadGallery() {
     if (error) throw error;
 
     galleryElement.replaceChildren();
-    if (!data.length) {
+    if (!Array.isArray(data) || !data.length) {
       galleryState = "empty";
       updateGalleryStatus();
       return;
     }
 
-    data.forEach(item => galleryElement.append(createGalleryItem(item, client)));
+    let validItemCount = 0;
+    data.forEach(item => {
+      const galleryItem = createGalleryItem(item, client);
+      if (galleryItem) {
+        galleryElement.append(galleryItem);
+        validItemCount += 1;
+      }
+    });
+    if (!validItemCount) {
+      galleryState = "empty";
+      updateGalleryStatus();
+      return;
+    }
     galleryState = "ready";
     updateGalleryStatus();
   } catch (error) {

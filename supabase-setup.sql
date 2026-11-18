@@ -1,3 +1,5 @@
+create extension if not exists pgcrypto;
+
 create table if not exists public.site_admins (
   user_id uuid primary key references auth.users (id) on delete cascade,
   created_at timestamptz not null default now()
@@ -24,9 +26,9 @@ as $$
   select exists (
     select 1
     from public.site_admins
-    where user_id = (select auth.uid())
+    where user_id = auth.uid()
   )
-  and (select auth.jwt() ->> 'aal') = 'aal2';
+  and coalesce(auth.jwt() ->> 'aal', 'aal1') = 'aal2';
 $$;
 
 revoke all on function public.is_site_admin() from public;
@@ -39,7 +41,7 @@ grant insert, update, delete on public.site_media to authenticated;
 drop policy if exists "Admins can read their own admin record" on public.site_admins;
 create policy "Admins can read their own admin record"
   on public.site_admins for select to authenticated
-  using (user_id = (select auth.uid()));
+  using (user_id = auth.uid());
 
 drop policy if exists "Public can read site media" on public.site_media;
 create policy "Public can read site media"
@@ -74,6 +76,11 @@ on conflict (id) do update
 set public = excluded.public,
     file_size_limit = excluded.file_size_limit,
     allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "Public can read SSTPW media" on storage.objects;
+create policy "Public can read SSTPW media"
+  on storage.objects for select to anon, authenticated
+  using (bucket_id = 'sstpw-media');
 
 drop policy if exists "Admins can read SSTPW media" on storage.objects;
 create policy "Admins can read SSTPW media"

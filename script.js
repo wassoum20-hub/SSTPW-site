@@ -67,6 +67,8 @@ const translations = {
     whatsapp_ready: "WhatsApp s’est ouvert avec votre demande. Vérifiez le message puis appuyez sur Envoyer.",
     whatsapp_blocked: "L’ouverture de WhatsApp a été bloquée. Ouvrez-le avec ce lien :",
     whatsapp_link: "Ouvrir WhatsApp",
+    form_required: "Veuillez remplir tous les champs.",
+    form_invalid_phone: "Veuillez saisir un numéro de téléphone valide.",
     footer_slogan: "Construire aujourd'hui, pour demain",
     lang_switch: "عربي"
   },
@@ -138,12 +140,21 @@ const translations = {
     whatsapp_ready: "تم فتح واتساب مع تفاصيل طلبك. راجع الرسالة واضغط على إرسال.",
     whatsapp_blocked: "تم حظر فتح واتساب. افتحه من هذا الرابط:",
     whatsapp_link: "فتح واتساب",
+    form_required: "يرجى ملء جميع الحقول.",
+    form_invalid_phone: "يرجى إدخال رقم هاتف صالح.",
     footer_slogan: "نبني اليوم من أجل الغد",
     lang_switch: "Français"
   }
 };
 
-let currentLang = "fr";
+const savedLanguage = (() => {
+  try {
+    return localStorage.getItem("sstpw-language");
+  } catch (error) {
+    return null;
+  }
+})();
+let currentLang = savedLanguage === "ar" ? "ar" : "fr";
 
 function setLanguage(lang) {
   const t = translations[lang];
@@ -172,6 +183,11 @@ function setLanguage(lang) {
   document.querySelector('meta[name="description"]').content = t.description;
   document.getElementById("langBtn").textContent = t.lang_switch;
   currentLang = lang;
+  try {
+    localStorage.setItem("sstpw-language", lang);
+  } catch (error) {
+    // The language still applies when storage is unavailable.
+  }
   const menuIsOpen = navToggle.getAttribute("aria-expanded") === "true";
   navToggle.setAttribute("aria-label", t[menuIsOpen ? "menu_close" : "menu_open"]);
   document.dispatchEvent(new CustomEvent("sstpw:languagechange", { detail: { lang } }));
@@ -204,18 +220,33 @@ document.getElementById("contactForm").addEventListener("submit", event => {
   const form = event.currentTarget;
   const formData = new FormData(form);
   const t = translations[currentLang];
+  const name = String(formData.get("name") || "").trim();
+  const phone = String(formData.get("phone") || "").trim();
+  const project = String(formData.get("message") || "").trim();
+  const status = document.getElementById("formStatus");
+
+  if (!name || !phone || !project) {
+    status.textContent = t.form_required;
+    return;
+  }
+  if (phone.replace(/[^0-9]/g, "").length < 7) {
+    status.textContent = t.form_invalid_phone;
+    form.querySelector('[name="phone"]').focus();
+    return;
+  }
+
   const message = [
-    `${t.whatsapp_name}: ${formData.get("name")}`,
-    `${t.whatsapp_phone}: ${formData.get("phone")}`,
-    `${t.whatsapp_project}: ${formData.get("message")}`
+    `${t.whatsapp_name}: ${name}`,
+    `${t.whatsapp_phone}: ${phone}`,
+    `${t.whatsapp_project}: ${project}`
   ].join("\n");
   const whatsappUrl = `https://wa.me/21698975759?text=${encodeURIComponent(message)}`;
-  const status = document.getElementById("formStatus");
   const whatsappWindow = window.open(whatsappUrl, "_blank");
 
   if (whatsappWindow) {
     whatsappWindow.opener = null;
     status.textContent = t.whatsapp_ready;
+    form.reset();
   } else {
     status.replaceChildren(document.createTextNode(`${t.whatsapp_blocked} `));
     const link = document.createElement("a");
@@ -225,8 +256,6 @@ document.getElementById("contactForm").addEventListener("submit", event => {
     link.textContent = t.whatsapp_link;
     status.append(link);
   }
-
-  form.reset();
 });
 
 setLanguage(currentLang);
