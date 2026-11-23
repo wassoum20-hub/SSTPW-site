@@ -47,6 +47,7 @@ const adminTranslations = {
           captcha_required: "أكمل تحقق hCaptcha أولًا.",
           captcha_key_missing: "أضف مفتاح الموقع العام من hCaptcha إلى supabase-config.js.",
           captcha_load_error: "تعذر تحميل hCaptcha. أعد تحميل الصفحة وحاول مجددًا.",
+          captcha_config_error: "تعذّر التحقق من hCaptcha لأن إعداد المفتاح العام في الموقع لا يطابق إعداد Supabase. حدّث إعداد CAPTCHA في لوحة Supabase.",
           no_media: "لا توجد صور أو مقاطع فيديو منشورة.",
           file_type: "نوع ملف غير مدعوم. استخدم JPG أو PNG أو WebP أو MP4 أو WebM.",
           file_size: "حجم الملف يتجاوز الحد الأقصى وهو 50 ميغابايت.",
@@ -103,6 +104,7 @@ const adminTranslations = {
           captcha_required: "Veuillez d’abord terminer la vérification hCaptcha.",
           captcha_key_missing: "Ajoutez la clé publique du site hCaptcha dans supabase-config.js.",
           captcha_load_error: "Impossible de charger hCaptcha. Rechargez la page et réessayez.",
+          captcha_config_error: "La vérification hCaptcha est indisponible car la clé publique du site ne correspond pas à la configuration Supabase. Corrigez le CAPTCHA dans le tableau de bord Supabase.",
           no_media: "Aucune photo ou vidéo publiée.",
           file_type: "Type de fichier non accepté. Utilisez JPG, PNG, WebP, MP4 ou WebM.",
           file_size: "Le fichier dépasse la limite de 50 Mo.",
@@ -145,6 +147,14 @@ function text(key) {
 
 function isMissingTableError(error) {
     return error && (error.code === "PGRST205" || error.code === "42P01");
+}
+
+function formatLoginError(error) {
+    const message = String(error?.message || "");
+    if (/sitekey-secret-mismatch/i.test(message) || /captcha/i.test(message)) {
+          return text("captcha_config_error");
+    }
+    return message;
 }
 
 function setStatus(message, kind) {
@@ -449,7 +459,7 @@ async function verifyMfa(event) {
     } catch (error) {
           dashboard.hidden = true;
           mfaStep.hidden = false;
-          setStatus(`${text("login_error")}${error.message}`, "error");
+          setStatus(`${text("login_error")}${formatLoginError(error)}`, "error");
     } finally {
           submitButton.disabled = false;
     }
@@ -529,7 +539,7 @@ loginForm.addEventListener("submit", async event => {
           resetCaptcha();
           dashboard.hidden = true;
           loginForm.hidden = false;
-          setStatus(`${text("login_error")}${error.message}`, "error");
+          setStatus(`${text("login_error")}${formatLoginError(error)}`, "error");
     } finally {
           submitButton.disabled = false;
     }
