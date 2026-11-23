@@ -345,6 +345,11 @@ body.rtl .fact { border-right: 0; border-left: 1px solid var(--line); }
   .card { min-height: auto; }
   .service-number { margin-bottom: 15px; }
 }
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
 }
