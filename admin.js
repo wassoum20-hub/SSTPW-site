@@ -44,10 +44,6 @@ const adminTranslations = {
           mfa_cancel: "إلغاء وتسجيل الخروج",
           mfa_secret: "المفتاح اليدوي",
           mfa_verifying: "جارٍ التحقق...",
-          captcha_required: "أكمل تحقق hCaptcha أولًا.",
-          captcha_key_missing: "أضف مفتاح الموقع العام من hCaptcha إلى supabase-config.js.",
-          captcha_load_error: "تعذر تحميل hCaptcha. أعد تحميل الصفحة وحاول مجددًا.",
-          captcha_config_error: "تعذّر التحقق من hCaptcha لأن إعداد المفتاح العام في الموقع لا يطابق إعداد Supabase. حدّث إعداد CAPTCHA في لوحة Supabase.",
           no_media: "لا توجد صور أو مقاطع فيديو منشورة.",
           file_type: "نوع ملف غير مدعوم. استخدم JPG أو PNG أو WebP أو MP4 أو WebM.",
           file_size: "حجم الملف يتجاوز الحد الأقصى وهو 50 ميغابايت.",
@@ -101,10 +97,6 @@ const adminTranslations = {
           mfa_cancel: "Annuler et se déconnecter",
           mfa_secret: "Clé manuelle",
           mfa_verifying: "Vérification en cours...",
-          captcha_required: "Veuillez d’abord terminer la vérification hCaptcha.",
-          captcha_key_missing: "Ajoutez la clé publique du site hCaptcha dans supabase-config.js.",
-          captcha_load_error: "Impossible de charger hCaptcha. Rechargez la page et réessayez.",
-          captcha_config_error: "La vérification hCaptcha est indisponible car la clé publique du site ne correspond pas à la configuration Supabase. Corrigez le CAPTCHA dans le tableau de bord Supabase.",
           no_media: "Aucune photo ou vidéo publiée.",
           file_type: "Type de fichier non accepté. Utilisez JPG, PNG, WebP, MP4 ou WebM.",
           file_size: "Le fichier dépasse la limite de 50 Mo.",
@@ -120,10 +112,6 @@ const maxFileSize = 50 * 1024 * 1024;
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "video/mp4", "video/webm"]);
 let adminLanguage = "ar";
 let supabaseClient;
-let captchaWidgetId;
-let captchaToken = "";
-let captchaScriptPromise;
-
 const loginForm = document.getElementById("loginForm");
 const uploadForm = document.getElementById("uploadForm");
 const dashboard = document.getElementById("dashboard");
@@ -138,7 +126,6 @@ const mfaIntro = document.getElementById("mfaIntro");
 const mfaEnrollment = document.getElementById("mfaEnrollment");
 const mfaQr = document.getElementById("mfaQr");
 const mfaSecret = document.getElementById("mfaSecret");
-const captchaWidget = document.getElementById("hcaptchaWidget");
 let pendingMfa;
 
 function text(key) {
@@ -150,68 +137,12 @@ function isMissingTableError(error) {
 }
 
 function formatLoginError(error) {
-    const message = String(error?.message || "");
-    if (/sitekey-secret-mismatch/i.test(message) || /captcha/i.test(message)) {
-          return text("captcha_config_error");
-    }
-    return message;
+    return String(error?.message || "");
 }
 
 function setStatus(message, kind) {
     adminStatus.textContent = message || "";
     adminStatus.className = `admin-status${kind ? ` is-${kind}` : ""}`;
-}
-
-async function setupCaptcha() {
-    const siteKey = window.SSTPW_SUPABASE_CONFIG?.hcaptchaSiteKey?.trim();
-    if (!siteKey) throw new Error(text("captcha_key_missing"));
-
-    if (!window.hcaptcha) {
-          if (!captchaScriptPromise) {
-                  captchaScriptPromise = new Promise((resolve, reject) => {
-                          const script = document.createElement("script");
-                          const callbackName = "sstpwHcaptchaLoaded";
-                          window[callbackName] = () => {
-                                  delete window[callbackName];
-                                  resolve();
-                          };
-                          script.src = `https://js.hcaptcha.com/1/api.js?onload=${callbackName}&render=explicit`;
-                          script.async = true;
-                          script.defer = true;
-                          script.onerror = () => {
-                                  delete window[callbackName];
-                                  reject(new Error(text("captcha_load_error")));
-                          };
-                          document.head.append(script);
-                  });
-          }
-          await captchaScriptPromise;
-    }
-
-    if (captchaWidgetId === undefined) {
-          captchaWidgetId = window.hcaptcha.render(captchaWidget, {
-                  sitekey: siteKey,
-                  callback: token => {
-                          captchaToken = token;
-                          setStatus("");
-                  },
-                  "expired-callback": () => {
-                          captchaToken = "";
-                          setStatus(text("captcha_required"), "error");
-                  },
-                  "error-callback": () => {
-                          captchaToken = "";
-                          setStatus(text("captcha_load_error"), "error");
-                  }
-          });
-    }
-}
-
-function resetCaptcha() {
-    captchaToken = "";
-    if (window.hcaptcha && captchaWidgetId !== undefined) {
-          window.hcaptcha.reset(captchaWidgetId);
-    }
 }
 
 function setLanguage(language) {
@@ -480,11 +411,6 @@ async function initializeAdmin() {
 
   supabaseClient = client;
     loginForm.hidden = false;
-    try {
-          await setupCaptcha();
-    } catch (error) {
-          setStatus(error.message, "error");
-    }
     const { error: schemaError } = await supabaseClient
       .from("site_media")
       .select("id")
@@ -517,10 +443,6 @@ document.getElementById("adminLangBtn").addEventListener("click", async () => {
 
 loginForm.addEventListener("submit", async event => {
     event.preventDefault();
-    if (!captchaToken) {
-          setStatus(text("captcha_required"), "error");
-          return;
-    }
     const submitButton = loginForm.querySelector('button[type="submit"]');
     submitButton.disabled = true;
     setStatus(text("signing_in"));
@@ -528,15 +450,12 @@ loginForm.addEventListener("submit", async event => {
           const formData = new FormData(loginForm);
           const { data, error } = await supabaseClient.auth.signInWithPassword({
                   email: formData.get("email"),
-              password: formData.get("password"),
-              options: { captchaToken }
+              password: formData.get("password")
           });
-          resetCaptcha();
           if (error) throw error;
           await continueWithMfa(data.session);
           setStatus("");
     } catch (error) {
-          resetCaptcha();
           dashboard.hidden = true;
           loginForm.hidden = false;
           setStatus(`${text("login_error")}${formatLoginError(error)}`, "error");

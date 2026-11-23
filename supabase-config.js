@@ -3,9 +3,7 @@ window.SSTPW_SUPABASE_CONFIG = {
   // Example: "https://xyzcompany.supabase.co"
   url: "https://ilbpxwrbaveizzndqgxs.supabase.co",
   // Example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  anonKey: "sb_publishable_Ifj6uHVG0zpw-vku8yDazA_YT-zXVPS",
-  // Public site key from the hCaptcha dashboard; never put the hCaptcha secret here.
-  hcaptchaSiteKey: "dfa68436-f84a-4d0e-bfdc-dbd27fc6f866"
+  anonKey: "sb_publishable_Ifj6uHVG0zpw-vku8yDazA_YT-zXVPS"
 };
 
 window.createSstpwSupabaseClient = function () {
